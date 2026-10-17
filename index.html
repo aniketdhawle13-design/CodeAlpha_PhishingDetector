@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI</title>
+
+```
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+```
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            🛡️ PhishGuard AI
+        </a>
+
+```
+    <a href="/dashboard" class="btn btn-outline-light">
+        Dashboard
+    </a>
+</div>
+```
+
+</nav>
+
+<div class="container mt-5">
+
+```
+<div class="hero-card">
+
+    <h1 class="display-5 fw-bold">
+        AI Powered Phishing Detection
+    </h1>
+
+    <p class="lead">
+        Detect malicious URLs and phishing emails instantly.
+    </p>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+
+        <div class="glass-card">
+
+            <h3>🌐 URL Scanner</h3>
+
+            <form method="POST">
+
+                <input type="hidden"
+                       name="scan_type"
+                       value="url">
+
+                <input
+                    type="text"
+                    class="form-control mt-3"
+                    name="url"
+                    placeholder="https://example.com"
+                >
+
+                <button
+                    class="btn btn-primary mt-3 w-100">
+                    Scan URL
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="glass-card">
+
+            <h3>📧 Email Scanner</h3>
+
+            <form method="POST">
+
+                <input type="hidden"
+                       name="scan_type"
+                       value="email">
+
+                <textarea
+                    class="form-control mt-3"
+                    rows="6"
+                    name="email_content"
+                    placeholder="Paste email content here..."
+                ></textarea>
+
+                <button
+                    class="btn btn-danger mt-3 w-100">
+                    Analyze Email
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% if result %}
+
+<div class="result-card mt-5">
+
+    <h2>Scan Result</h2>
+
+    <h3 class="
+    {% if result.status == 'SAFE' %}
+    text-success
+    {% elif result.status == 'SUSPICIOUS' %}
+    text-warning
+    {% else %}
+    text-danger
+    {% endif %}
+    ">
+        {{ result.status }}
+    </h3>
+
+    <div class="progress mt-3">
+
+        <div class="progress-bar"
+             role="progressbar"
+             style="width: {{ result.score }}%">
+             {{ result.score }}%
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <h5>Reasons</h5>
+
+        <ul>
+
+            {% for reason in result.reasons %}
+
+            <li>{{ reason }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    <a href="/report/{{ result.score }}/{{ result.status }}"
+       class="btn btn-success mt-3">
+        Download PDF Report
+    </a>
+
+</div>
+
+{% endif %}
+```
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+    
