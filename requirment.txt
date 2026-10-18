@@ -1,3 +1,4 @@
+poetry install
 flask
 pandas
 numpy
